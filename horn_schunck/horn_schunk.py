@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import scipy.ndimage
 import matplotlib.pyplot as plt
+from lucas_kanade.lucas_kanade import vis_optic_flow_arrows
 
 
 def compute_gradients(firstImage, secondImage):
@@ -69,8 +70,10 @@ def horn_schunk(firstImage, secondImage, lambada, num_iter, image_ind, dataset):
     plt.imshow(flow_map, cmap=None)
 
     # Plot, visualize and save the optical flow
-    # added_image = cv2.addWeighted(firstImage, 0.5, flow_map, 1, 0, dtype=cv2.CV_32F)
-    # cv2.imwrite(f'./results/horn_schunck/optical_flow/{dataset}/flow_map_{image_ind}.png', added_image)
+    added_image = cv2.addWeighted(firstImage, 0.5, flow_map, 1, 0, dtype=cv2.CV_32F)
+    cv2.imwrite(f'./results/horn_schunck/optical_flow/{dataset}/flow_map_{image_ind}.png', added_image)
+    vis_optic_flow_arrows(firstImage, [u, v], f'./results/horn_schunck/optical_flow/{dataset}/flow_map_{image_ind}.png')
+
     plt.show()
 
     flow = [u, v]
